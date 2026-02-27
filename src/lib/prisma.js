@@ -1,14 +1,12 @@
-const { PrismaClient } = require('@prisma/client');
+import { PrismaClient } from '@prisma/client'
+import { PrismaPg } from '@prisma/adapter-pg'
+import pg from 'pg'
 
-// This prevents creating multiple connection pools
-// during development when the server reloads.
-const prismaClientSingleton = () => {
-    return new PrismaClient();
-};
+// 1. Setup the PostgreSQL driver
+const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL })
+const adapter = new PrismaPg(pool)
 
-const globalForPrisma = global;
-const prisma = globalForPrisma.prisma ?? prismaClientSingleton();
+// 2. Pass the adapter to the Client
+const prisma = new PrismaClient({ adapter })
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
-
-module.exports = prisma;
+export { prisma }
