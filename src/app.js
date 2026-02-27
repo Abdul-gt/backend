@@ -1,4 +1,4 @@
-import 'dotenv/config';
+
 require('dotenv').config();
 const express=require('express')
 const prisma = require('./lib/prisma');
@@ -9,7 +9,7 @@ app.use(express.json())
 
 
 const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+
 
 // Add this to your Express app
 app.get('/test', async (req, res) => {
