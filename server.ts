@@ -1,5 +1,6 @@
-const express = require('express');
-const authRoutes = require('./src/routes/authRoutes');
+import 'dotenv/config'; // 1. Load env vars immediately
+import express from 'express';
+import authRoutes from './src/routes/authRoutes.js';
 
 const app = express();
 app.use(express.json());
